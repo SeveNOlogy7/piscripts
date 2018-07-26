@@ -31,17 +31,19 @@ do
     #echo $file_date
     if [ $t_d -le $t_w ] 
     then                # file older than 1 week
-        if [ $td -le $t_m]  # and file older than 1 month
+        if [ $t_d -le $t_m ]  # and file older than 1 month
         then
-            if [ $counter_m -gt $c_m]
+            if [ $counter_m -gt $c_m ]
             then        # too many files older than 1 month
+                #echo $cmd_del${ARR[$ii - 1]}
                 eval $cmd_del${ARR[$ii - 1]} # assume a descent sequence, always delete files that are very old
             else
                 let "counter_m++"
             fi
         else    # file older than 1week but fresher than 1 month
-            if [$counter_w -gt $ c_w]
+            if [ $counter_w -gt $c_w ]
             then        # too many shoots
+                #echo $cmd_del${ARR[$ii - 1]}
                 eval $cmd_del${ARR[$ii - 1]}
             else
                 let "counter_w++"
@@ -53,5 +55,5 @@ done
 #declare -p ARR 
 
 # create new backup
-tar -czvf /tmp/homepi-$current_date.tar.gz /home/pi/rclone-sync.sh /home/pi/.bashrc /home/pi/.bash_profile /home/pi/.profile /home/pi/.vimrc /home/pi/.virtualenv /home/pi/sevenology
+tar -czvf /tmp/homepi-$current_date.tar.gz /home/pi/piscripts /home/pi/.bashrc /home/pi/.bash_profile /home/pi/.profile /home/pi/.vimrc /home/pi/.virtualenv /home/pi/sevenology
 rclone sync -v /tmp/homepi-$current_date.tar.gz gdrive:/rpi-sync
